@@ -1,16 +1,22 @@
 # gpt_card_analyzer
 
-A new Flutter project.
+TO DO:
 
-## Getting Started
+✅ get program set up to make a query to either (one of) chatgpt or gemini
+* get program set up to write to a google sheets document
+* * get program set up to write to a second tab in a sheet
+* get program set up to allow program permission to access google sheet
+* refine query to get more specific output and clarify the workflow
+* draw out the popup for "is this your card?" - include menu to click on the specifics about the card (graded, sport, etc) and either proceed or try again to identify the card
+* get program set up to use an image as input for the llm query
+* get app set up to allow user to take pic or upload pic to app
 
-This project is a starting point for a Flutter application.
+* figure out how to hide api key? Is it possible?
+* multi-model referencing
+* set up queries to the other llm
+* * can either choose one, the other, or both, and get charged accordingly with no additional markup
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Past MVP
+* set up app for payments
