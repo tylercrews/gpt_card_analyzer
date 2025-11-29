@@ -4,6 +4,7 @@ TO DO:
 
 Barebones necessities
 ✅ get program set up to make a query to either (one of) chatgpt or gemini
+* get program to set up to make a query via firebase_vertexai instead of the regular api (allows security, no storing key in app)
 * get program set up to write to a google sheets document
 * * get program set up to write to a second tab in a sheet
 * get program set up to allow program permission to access google sheet
@@ -15,6 +16,7 @@ UI beautification
 * draw out the popup for "is this your card?" - include menu to click on the specifics about the card (graded, sport, etc) and either proceed or try again to identify the card
 
 * figure out how to hide public api key? Is it possible?
+* * firebase cloud functions secrets?
 * multi-model referencing
 * set up queries to the other llm
 * * can either choose one, the other, or both, and get charged accordingly with no additional markup
