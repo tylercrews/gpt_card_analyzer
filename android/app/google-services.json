@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "551920917432",
+    "project_id": "gpt-card-analyzer",
+    "storage_bucket": "gpt-card-analyzer.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:551920917432:android:3c9a604037cc8779738d4d",
+        "android_client_info": {
+          "package_name": "com.example.gpt_card_analyzer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBppXH9EUCohzeqMh3i2iiA8wb41lSa04c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
