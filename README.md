@@ -1,6 +1,7 @@
 # gpt_card_analyzer
 
 TO DO:
+✅ rotate your public api keys in firebase_options, and save them to github as secrets next time for security's sake. Figure out if they can be environment variables that can be gitignored here so you can still save them online without exposing them
 
 phase 1. Barebones necessities - making queries and writing to the google sheet, 
 ✅ get program set up to make a query to either (one of) chatgpt or gemini
