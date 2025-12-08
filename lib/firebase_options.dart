@@ -17,7 +17,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 /// ```
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
-    dotenv.load();
+    // dotenv.load(); // need to do this in the outer function before this is called
 
     if (kIsWeb) {
       return FirebaseOptions(

@@ -5,8 +5,8 @@ TO DO:
 
 phase 1. Barebones necessities - making queries and writing to the google sheet, 
 ✅ get program set up to make a query to either (one of) chatgpt or gemini
-* get program to set up to make a query via firebase_vertexai instead of the regular api (allows security, no storing key in app)
-* * 'FirebaseVertexAI' is deprecated and shouldn't be used. `FirebaseVertexAI` library and `firebase_vertexai` package have been renamed and replaced by the new Firebase AI SDK: `FirebaseAI` in `firebase_ai` package. See details in the [migration guide](https://firebase.google.com/docs/vertex-ai/migrate-to-latest-sdk).
+✅ get program to set up to make a query via firebase_vertexai instead of the regular api (allows security, no storing key in app)
+- -  'FirebaseVertexAI' is deprecated and shouldn't be used. `FirebaseVertexAI` library and `firebase_vertexai` package have been renamed and replaced by the new Firebase AI SDK: `FirebaseAI` in `firebase_ai` package. See details in the [migration guide](https://firebase.google.com/docs/vertex-ai/migrate-to-latest-sdk).
 
 * get program set up to use an image as input for the llm query
 * get app set up to allow user to take pic or upload pic to app (to use for query)

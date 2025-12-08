@@ -1,3 +1,5 @@
+/*
+
 // https://github.com/firebase/flutterfire/blob/main/packages/firebase_ai/firebase_ai/example/lib/main.dart
 // main.dart for flutterfire project using firebase_ai
 
@@ -353,3 +355,4 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+*/
