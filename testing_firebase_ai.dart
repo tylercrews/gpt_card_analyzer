@@ -36,6 +36,19 @@ Future<void> askGemini() async {
   print(response.text); // this is the actual response
   // print(response.toString()); // Instance of 'GenerateContentResponse'
 
+  // Print the response text
+  print('Response Text: ${response.text}');
+
+  // Print token usage details
+  if (response.usageMetadata != null) {
+    print('Input Tokens: ${response.usageMetadata!.promptTokenCount}');
+    print('Output Tokens: ${response.usageMetadata!.candidatesTokenCount}');
+    print('Total Tokens: ${response.usageMetadata!.totalTokenCount}');
+    print('prompt token details: ${response.usageMetadata!.promptTokensDetails}');
+    print('candidates token details: ${response.usageMetadata!.candidatesTokensDetails}');
+  } else {
+    print('Token usage metadata is not available.');
+  }
 }
 
 void main() async {
