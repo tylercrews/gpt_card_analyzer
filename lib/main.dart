@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 void main() {
   runApp(const MyApp());
@@ -55,6 +57,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  final ImagePicker _picker = ImagePicker();
+  File? _selectedImage;
 
   void _incrementCounter() {
     setState(() {
@@ -65,6 +69,24 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+  }
+
+  Future<void> _pickImageFromGallery() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        _selectedImage = File(image.path);
+      });
+    }
+  }
+
+  Future<void> _pickImageFromCamera() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+    if (image != null) {
+      setState(() {
+        _selectedImage = File(image.path);
+      });
+    }
   }
 
   @override
@@ -103,19 +125,47 @@ class _MyHomePageState extends State<MyHomePage> {
           // action in the IDE, or press "p" in the console), to see the
           // wireframe for each widget.
           mainAxisAlignment: .center,
-          children: [
+          children: <Widget>[
             const Text('You have pushed the button this many times:'),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            const SizedBox(height: 20),
+            if (_selectedImage != null)
+              Image.file(
+                _selectedImage!,
+                width: 200,
+                height: 200,
+                fit: BoxFit.cover,
+              )
+            else
+              const Text('No image selected'),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: _pickImageFromGallery,
+            tooltip: 'Pick from Gallery',
+            child: const Icon(Icons.photo_library),
+          ),
+          const SizedBox(height: 10),
+          FloatingActionButton(
+            onPressed: _pickImageFromCamera,
+            tooltip: 'Capture from Camera',
+            child: const Icon(Icons.camera_alt),
+          ),
+          const SizedBox(height: 10),
+          FloatingActionButton(
+            onPressed: _incrementCounter,
+            tooltip: 'Increment',
+            child: const Icon(Icons.add),
+          ),
+        ],
       ),
     );
   }
