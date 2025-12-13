@@ -8,8 +8,9 @@ phase 1. Barebones necessities - making queries and writing to the google sheet,
 ✅ get program to set up to make a query via firebase_vertexai instead of the regular api (allows security, no storing key in app)
 - -  'FirebaseVertexAI' is deprecated and shouldn't be used. `FirebaseVertexAI` library and `firebase_vertexai` package have been renamed and replaced by the new Firebase AI SDK: `FirebaseAI` in `firebase_ai` package. See details in the [migration guide](https://firebase.google.com/docs/vertex-ai/migrate-to-latest-sdk).
 
-* get program set up to use an image as input for the llm query
-* get app set up to allow user to take pic or upload pic to app (to use for query)
+✅ get program set up to use an image as input for the llm query
+✅ get app set up to allow user to take pic or upload pic to app (to use for query)
+* (combine) get app to use the uploaded/taken pic as the prompt for the query
 
 * the google sheets looks like we're gonna need to split this into frontend and backend:
 * * the google sheets editor should be a standalone python function running on firebase cloud functions.
@@ -46,3 +47,13 @@ phase 3. payments
 * * for every $10 spent, $3 will go to the app store, so make sure that is clearly shown and the user is given the correct amount of tokens. Should provide a little receipt
 * * every purchase should also provide an estimate for about how many cards you'll be able to look up
 * calculations for how many tokens user is using, updating the firestore with the new total after every query
+* pricing: 
+* * here's an example of my first general image prompt just asking "what is this card": 
+* * * 1069 (Input)+357 (Output)+1619 (Thinking)=3045 (Total)
+* * remember thinking tokens count as output tokens. and output tokens are way more expensive than input tokens
+* * price per million on google's side: 1mil for $2 for input, 1mil for $12 for output - 0.000012 dollars/token
+* * so therefore the cost of looking up one image on gemini pro preview (without the further processing) cost ~$0.03654
+* * gonna need to get a better assessment once I have the actual workflow programmed. if it's 10 cents a card though isn't that prohibitively expensive? 
+* * 2.5 flash has an output price of $2.50 per 1mil which is $0.0075 per lookup
+* * 2.5 flash lite output price is $0.40 per 1mil which is $0.0012 per lookup.
+* * will really need to test flash lite to see if it's a viable option. 
