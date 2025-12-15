@@ -10,13 +10,23 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'lib/firebase_options.dart'; // don't need lib if you're making this file in the actual library folder
 
 Future<void> askGemini() async {
-  print('askgemini 1');
-  var test_prompt = """Take the image of the sports card I have uploaded, and see if you can figure out the player name, sport, and card brand.
-    Then look that card up on www.tcdb.com and see if you can find an image match for the card.
-    Extract the name of the card and look that up on www.130point.com to see if there are any prices for it.
+  var test_schema = Schema.object (properties: {
+      "Player name": Schema.string(),
+      "Sport": Schema.string(),
+      "Card brand": Schema.string(),
+      "Successfully found on tcdb": Schema.boolean(),
+      "URL link to the tcdb match": Schema.string(),
+      "Official card name": Schema.string(),
+      "Successfully found on 130point": Schema.boolean(),
+      "URL link to the 130point match": Schema.string(),
+      "130point price": Schema.string(),
+      "Estimated price from other sources": Schema.string(),
+      "Source of price estimate (name)": Schema.string(),
+      "Source of price estimate (URL)": Schema.string(),
+      "Price from estimate or 130point > \$5": Schema.string()
+  });
+  var test_prompt = "Take the image of the sports card I have uploaded, and see if you can figure out the player name, sport, and card brand. Then look that card up on www.tcdb.com and see if you can find an image match for the card. Extract the name of the card and look that up on www.130point.com to see if there are any prices for it. Finally, I want you to give me the results as described in the schema.";
 
-    Finally, I want you to give me the results as a spreadsheet row (in text that I can copy and paste into Excel/Sheets) as
-    Player name, sport, card brand, successfully found on tcdb (y/n), the URL link to the tcdb match, official card name, successfully found on 130point (y/n), the URL link to the 130point match, 130point price, estimated price from other sources, source of price estimate (name), source of price estimate (URL), price from estimate or 130point > \$5""";
 
 
   await Firebase.initializeApp(
@@ -30,9 +40,24 @@ Future<void> askGemini() async {
   var pro3 = 'gemini-3-pro-preview';
   var flash25 = 'gemini-2.5-flash';
   var flashlite25 = 'gemini-2.5-flash-lite';
-  var pro3model = FirebaseAI.vertexAI(location: 'global').generativeModel(model: pro3);
-  var flash25model = FirebaseAI.vertexAI().generativeModel(model: flash25);
-  var flashlite25model = FirebaseAI.vertexAI().generativeModel(model: flashlite25); 
+  var pro3model = FirebaseAI.vertexAI(location: 'global').generativeModel(model: pro3, 
+  generationConfig: GenerationConfig(
+    responseMimeType: 'application/json',
+    responseSchema: test_schema,
+  ),
+  );
+  var flash25model = FirebaseAI.vertexAI().generativeModel(model: flash25, 
+    generationConfig: GenerationConfig(
+    responseMimeType: 'application/json',
+    responseSchema: test_schema,
+  ),
+  );
+  var flashlite25model = FirebaseAI.vertexAI().generativeModel(model: flashlite25,
+    generationConfig: GenerationConfig(
+    responseMimeType: 'application/json',
+    responseSchema: test_schema,
+  ),
+  ); 
   
   final textPart = TextPart(test_prompt);
   Uint8List? imageBytes;
@@ -70,7 +95,7 @@ Future<void> askGemini() async {
     imageBytes,
   );
 
-  // Construct the "parts" of the prompt from the text and image
+  // Ensure all queries use the updated test_prompt
   final List<Part> contents = [
     textPart,
     imagePart,
@@ -88,7 +113,7 @@ Future<void> askGemini() async {
   if (response1.usageMetadata != null) {
     print('Input Tokens: ${response1.usageMetadata!.promptTokenCount}');
     print('Output Tokens: ${response1.usageMetadata!.candidatesTokenCount}');
-    print('Thinking Tokens: ${response1.usageMetadata!.thoughtsTokenCount}');
+    print('Thoughts Tokens: ${response1.usageMetadata!.thoughtsTokenCount}');
     print('Total Tokens: ${response1.usageMetadata!.totalTokenCount}');
     print('Prompt token details: ${response1.usageMetadata!.promptTokensDetails}');
     print('Candidates token details: ${response1.usageMetadata!.candidatesTokensDetails}');
@@ -109,7 +134,7 @@ Future<void> askGemini() async {
   if (response2.usageMetadata != null) {
     print('Input Tokens: ${response2.usageMetadata!.promptTokenCount}');
     print('Output Tokens: ${response2.usageMetadata!.candidatesTokenCount}');
-    print('Thinking Tokens: ${response2.usageMetadata!.thoughtsTokenCount}');
+    print('Thoughts Tokens: ${response2.usageMetadata!.thoughtsTokenCount}');
     print('Total Tokens: ${response2.usageMetadata!.totalTokenCount}');
     print('Prompt token details: ${response2.usageMetadata!.promptTokensDetails}');
     print('Candidates token details: ${response2.usageMetadata!.candidatesTokensDetails}');
@@ -125,11 +150,12 @@ Future<void> askGemini() async {
     [Content.multi(contents)],
   );
 
-  print('Response Text: ${response2.text}');
+  print('Response Text: ${response3.text}');
 
   if (response3.usageMetadata != null) {
     print('Input Tokens: ${response3.usageMetadata!.promptTokenCount}');
-    print('Output Tokens: ${response3.usageMetadata!.thoughtsTokenCount}');
+    print('Output Tokens: ${response3.usageMetadata!.candidatesTokenCount}');
+    print('Thoughts Tokens: ${response3.usageMetadata!.thoughtsTokenCount}');
     print('Total Tokens: ${response3.usageMetadata!.totalTokenCount}');
     print('Prompt token details: ${response3.usageMetadata!.promptTokensDetails}');
     print('Candidates token details: ${response3.usageMetadata!.candidatesTokensDetails}');
